@@ -1,0 +1,62 @@
+* Startpunkt digitaler Output
+Blink Beispiel: File $\rightarrow$ Examples $\rightarrow$ Basics $\rightarrow$ Blink
+
+#+begin_src C
+void setup() {
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(13, HIGH);
+  delay(1000);
+  digitalWrite(13, LOW);
+  delay(1000);
+}
+#+end_src
+
+* Setup
+
+~pinMode(pin, modus)~ wählt für den Pin mit Nummer ~pin~ eine von drei
+Betriebsarten:
+
+- ~OUTPUT~: wird für Ausgabe verwendet, z.B. um LEDs zu schalten oder
+  mit anderen Microcontrollern zu sprechen.
+- ~INPUT~: Die Spannung am Pin kann gelesen werden.
+- ~INPUT_PULLUP~: Wie ~INPUT~, aber der Pin wird intern auf die
+  Versorgunsspannung gezogen.
+
+TODO: Bild zu Pullups?
+
+* digitalWrite und delay
+
+~digitalWrite(pin, zustand)~ setzt bei einem auf Output gestellten Pin
+die Ausgangsspannung:
+
+- 0 Volt für ~LOW~
+- 5 Volt für ~HIGH~ (oder was auch immer die aktuelle
+  Versorgungsspannung ist)
+
+~delay(ms)~ tut ~ms~ Millisekunden lang nichts.
+
+* Andere Blink Muster
+
+Zwei Sekunden lang an, eine halbe aus.
+
+#+BEAMER: \pause
+
+#+begin_src C
+digitalWrite(13, HIGH);
+delay(2000);
+digitalWrite(13, LOW);
+delay(500);
+#+end_src
+
+* Mehrere LEDs
+
+hier einfuegen?
+
+Timer + if
+
+* Schnelleres Blinken
+
+auf 1 ms oder so setzen, Verhaeltnisse aendern

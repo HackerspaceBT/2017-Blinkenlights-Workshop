@@ -1,0 +1,261 @@
+% Created 2017-03-17 Fri 18:45
+\documentclass[bigger]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage[german, germanb]{babel}
+\uselanguage{german}
+\usepackage{url}
+\usepackage{pgfplots}
+\usetikzlibrary{pgfplots.groupplots}
+\pdfmapfile{+sansmathaccent.map}
+\mode<beamer>{\usetheme{Berkeley}}
+\usetheme{default}
+\author{Stephan Messlinger \\ Valentin Ochs}
+\date{2017-03-20}
+\title{Blinkenlights Workshop}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.5.1 (Org mode 8.2.10)}}
+\begin{document}
+
+\maketitle
+
+\section{Digital Out}
+\label{sec-1}
+\begin{frame}[fragile,label=sec-1-1]{Startpunkt digitaler Output}
+ Blink Beispiel: File $\rightarrow$ Examples $\rightarrow$ Basics $\rightarrow$ Blink
+
+\begin{verbatim}
+void setup() {
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(13, HIGH);
+  delay(1000);
+  digitalWrite(13, LOW);
+  delay(1000);
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-1-2]{Setup}
+ \verb~pinMode(pin, modus)~ wählt für den Pin mit Nummer \verb~pin~ eine von drei
+Betriebsarten:
+
+\begin{itemize}
+\item \verb~OUTPUT~: wird für Ausgabe verwendet, z.B. um LEDs zu schalten oder
+mit anderen Microcontrollern zu sprechen.
+\item \verb~INPUT~: Die Spannung am Pin kann gelesen werden.
+\item \verb~INPUT_PULLUP~: Wie \verb~INPUT~, aber der Pin wird intern auf die
+Versorgunsspannung gezogen.
+\end{itemize}
+
+TODO: Bild zu Pullups?
+\end{frame}
+
+\begin{frame}[fragile,label=sec-1-3]{digitalWrite und delay}
+ \verb~digitalWrite(pin, zustand)~ setzt bei einem auf Output gestellten Pin
+die Ausgangsspannung:
+
+\begin{itemize}
+\item 0 Volt für \verb~LOW~
+\item 5 Volt für \verb~HIGH~ (oder was auch immer die aktuelle
+Versorgungsspannung ist)
+\end{itemize}
+
+\verb~delay(ms)~ tut \verb~ms~ Millisekunden lang nichts.
+\end{frame}
+
+\begin{frame}[fragile,label=sec-1-4]{Andere Blink Muster}
+ Zwei Sekunden lang an, eine halbe aus.
+
+\pause
+
+\begin{verbatim}
+digitalWrite(13, HIGH);
+delay(2000);
+digitalWrite(13, LOW);
+delay(500);
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[label=sec-1-5]{Mehrere LEDs}
+hier einfuegen?
+
+Timer + if
+\end{frame}
+
+\begin{frame}[label=sec-1-6]{Schnelleres Blinken}
+auf 1 ms oder so setzen, Verhaeltnisse aendern
+\end{frame}
+
+\section{PWM}
+\label{sec-2}
+\begin{frame}[fragile,label=sec-2-1]{analogWrite}
+ \verb~analogWrite(pin, wert)~ schaltet den Pin automatisch an und aus, mit
+variablen An-/Aus-Zeiten $\rightarrow$ Pulsweitenmodulation
+
+Frequenz: Etwa 490 Hz
+
+Wertebereich: 0 bis 255
+
+Nur auf Pins 3, 5, 6, 9, 10, und 11. Die PWM Pins sind auf dem Arduino
+mit \textasciitilde{} markiert.
+\end{frame}
+
+\begin{frame}[label=sec-2-2]{PWM Funktionsweise: Zähler + Vergleich}
+\begin{tikzpicture}
+\begin{axis}[xlabel=Zeit / s, ylabel=Zähler, ymin=-0.02*256, ymax=1.02*256]
+\addplot[blue, domain=0:0.001, samples=512] { floor(mod(x*490*2*pi*256, 256)) };
+\addplot[red, domain=0:0.001, samples=2] { 128 };
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[label=sec-2-3]{PWM, Schwellwert 128}
+\begin{tikzpicture}
+\begin{axis}[xlabel=Zeit / s, ylabel=Spannung / V, ymin=-0.1, ymax=5.1]
+\addplot[blue, domain=0:0.001, samples=500] { 5*ceil(0.5-mod(x*490*2*pi, 1)) };
+\addplot[red, domain=0:0.001, samples=2] { 2.5 };
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[label=sec-2-4]{PWM, Schwellwert 16}
+\begin{tikzpicture}
+\begin{axis}[xlabel=Zeit / s, ylabel=Spannung / V, ymin=-0.1, ymax=5.1]
+\addplot[blue, domain=0:0.001, samples=500] { 5*ceil(0.0625-mod(x*490*2*pi, 1)) };
+\addplot[red, domain=0:0.001, samples=2] { 16./256 };
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-2-5]{Einfacher PWM Code}
+ \begin{verbatim}
+void setup() {
+  pinMode(11, OUTPUT);
+}
+void loop() {
+  // Zeit seit Beginn des Programms
+  unsigned long time = millis();
+  // Berechne einen Sinus mit 0.1 Hz
+  int value = 127.5 *
+   (1+sin(millis * 0.001 * 0.1 * 2 * 3.1416));
+  // Verwende den Wert als Schwellwert
+  analogWrite(11, value);
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[label=sec-2-6]{PWM Frequenz}
+490 Hz sind bei schnellen Bewegungen sichtbar.
+
+Bestimmung der Frequenz: Taktfrequenz / Vorteiler / Maximalwert
+
+Taktfrequenz: 16 MHz
+Maximalwert: 256 für Pins 5 und 6, 510 für 3, 9, 10, 11
+\end{frame}
+
+\begin{frame}[fragile,label=sec-2-7]{PWM Vorteiler: Timer 0, Pins 5 und 6}
+ \begin{center}
+\begin{tabular}{rrr}
+Einstellung & Teiler & Frequenz\\
+\hline
+0x01 & 1 & 62500\\
+0x02 & 8 & 7813\\
+0x03 & 64 & 977\\
+0x04 & 256 & 244\\
+0x05 & 1024 & 61\\
+\end{tabular}
+\end{center}
+
+Einstellen durch
+\begin{verbatim}
+TCCR0B = (TCCR0B & 0b11111000) | Einstellung
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-2-8]{PWM Vorteiler: Timer 1, Pins 9 und 10}
+ \begin{center}
+\begin{tabular}{rrr}
+Einstellung & Teiler & Frequenz\\
+\hline
+0x01 & 1 & 31373\\
+0x02 & 8 & 3921\\
+0x03 & 64 & 490\\
+0x04 & 256 & 123\\
+0x05 & 1024 & 31\\
+\end{tabular}
+\end{center}
+
+Einstellen durch
+\begin{verbatim}
+TCCR1B = (TCCR0B & 0b11111000) | Einstellung
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-2-9]{PWM Vorteiler: Timer 2, Pins 11 und 3}
+ \begin{center}
+\begin{tabular}{rrr}
+Einstellung & Teiler & Frequenz\\
+\hline
+0x01 & 1 & 31373\\
+0x02 & 8 & 3921\\
+0x03 & 32 & 980\\
+0x04 & 64 & 490\\
+0x05 & 128 & 245\\
+0x06 & 256 & 123\\
+0x07 & 1024 & 31\\
+\end{tabular}
+\end{center}
+
+Einstellen durch
+\begin{verbatim}
+TCCR2B = (TCCR2B & 0b11111000) | Einstellung
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-2-10]{Vorsicht}
+ Frequenzänderung beeinflusst nicht nur LEDs, sondern alles, was an dem
+Timer hängt! Servos, Tonerzeugung, etc.
+
+Besonders wichtig: Timer 0 für \verb~millis()~ und
+\verb~delay()~. Standardvorteiler: 64. Bei Änderungen Zeiten entsprechend
+anpassen (Vervierfachen bei 256\ldots{})
+\end{frame}
+
+\section{Digital In}
+\label{sec-3}
+\begin{frame}[label=sec-3-1]{Startpunkt digitaler Input}
+Button Beispiel: File $\rightarrow$ Examples $\rightarrow$ Digital $\rightarrow$ Blink
+\end{frame}
+
+\begin{frame}[label=sec-3-2]{Schaltplan}
+\begin{itemize}
+\item pulldown, extern
+\item pullup, extern
+\item pullup, intern
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label=sec-3-3]{Unterbrechbare Abläufe starten}
+millis() und so?
+\end{frame}
+% Emacs 24.5.1 (Org mode 8.2.10)
+\end{document}

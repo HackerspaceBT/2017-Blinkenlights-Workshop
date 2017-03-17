@@ -1,0 +1,117 @@
+* analogWrite
+
+~analogWrite(pin, wert)~ schaltet den Pin automatisch an und aus, mit
+variablen An-/Aus-Zeiten $\rightarrow$ Pulsweitenmodulation
+
+Frequenz: Etwa 490 Hz
+
+Wertebereich: 0 bis 255
+
+Nur auf Pins 3, 5, 6, 9, 10, und 11. Die PWM Pins sind auf dem Arduino
+mit ~ markiert.
+
+* PWM Funktionsweise: Zähler + Vergleich
+#+BEGIN_LaTeX
+\begin{tikzpicture}
+\begin{axis}[xlabel=Zeit / s, ylabel=Zähler, ymin=-0.02*256, ymax=1.02*256]
+\addplot[blue, domain=0:0.001, samples=512] { floor(mod(x*490*2*pi*256, 256)) };
+\addplot[red, domain=0:0.001, samples=2] { 128 };
+\end{axis}
+\end{tikzpicture}
+#+END_LaTeX
+
+* PWM, Schwellwert 128
+#+BEGIN_LaTeX
+\begin{tikzpicture}
+\begin{axis}[xlabel=Zeit / s, ylabel=Spannung / V, ymin=-0.1, ymax=5.1]
+\addplot[blue, domain=0:0.001, samples=500] { 5*ceil(0.5-mod(x*490*2*pi, 1)) };
+\addplot[red, domain=0:0.001, samples=2] { 2.5 };
+\end{axis}
+\end{tikzpicture}
+#+END_LaTeX
+
+* PWM, Schwellwert 16
+#+BEGIN_LaTeX
+\begin{tikzpicture}
+\begin{axis}[xlabel=Zeit / s, ylabel=Spannung / V, ymin=-0.1, ymax=5.1]
+\addplot[blue, domain=0:0.001, samples=500] { 5*ceil(0.0625-mod(x*490*2*pi, 1)) };
+\addplot[red, domain=0:0.001, samples=2] { 16./256 };
+\end{axis}
+\end{tikzpicture}
+#+END_LaTeX
+
+* Einfacher PWM Code
+#+begin_src C
+void setup() {
+  pinMode(11, OUTPUT);
+}
+void loop() {
+  // Zeit seit Beginn des Programms
+  unsigned long time = millis();
+  // Berechne einen Sinus mit 0.1 Hz
+  int value = 127.5 *
+   (1+sin(millis * 0.001 * 0.1 * 2 * 3.1416));
+  // Verwende den Wert als Schwellwert
+  analogWrite(11, value);
+}
+#+end_src
+
+* PWM Frequenz
+490 Hz sind bei schnellen Bewegungen sichtbar.
+
+Bestimmung der Frequenz: Taktfrequenz / Vorteiler / Maximalwert
+
+Taktfrequenz: 16 MHz
+Maximalwert: 256 für Pins 5 und 6, 510 für 3, 9, 10, 11
+
+* PWM Vorteiler: Timer 0, Pins 5 und 6
+| Einstellung | Teiler | Frequenz |
+|-------------+--------+----------|
+|        0x01 |      1 |    62500 |
+|        0x02 |      8 |     7813 |
+|        0x03 |     64 |      977 |
+|        0x04 |    256 |      244 |
+|        0x05 |   1024 |       61 |
+
+Einstellen durch
+#+begin_src C
+TCCR0B = (TCCR0B & 0b11111000) | Einstellung
+#+end_src
+
+* PWM Vorteiler: Timer 1, Pins 9 und 10
+| Einstellung | Teiler | Frequenz |
+|-------------+--------+----------|
+|        0x01 |      1 |    31373 |
+|        0x02 |      8 |     3921 |
+|        0x03 |     64 |      490 |
+|        0x04 |    256 |      123 |
+|        0x05 |   1024 |       31 |
+
+Einstellen durch
+#+begin_src C
+TCCR1B = (TCCR0B & 0b11111000) | Einstellung
+#+end_src
+
+* PWM Vorteiler: Timer 2, Pins 11 und 3
+| Einstellung | Teiler | Frequenz |
+|-------------+--------+----------|
+|        0x01 |      1 |    31373 |
+|        0x02 |      8 |     3921 |
+|        0x03 |     32 |      980 |
+|        0x04 |     64 |      490 |
+|        0x05 |    128 |      245 |
+|        0x06 |    256 |      123 |
+|        0x07 |   1024 |       31 |
+
+Einstellen durch
+#+begin_src C
+TCCR2B = (TCCR2B & 0b11111000) | Einstellung
+#+end_src
+
+* Vorsicht
+Frequenzänderung beeinflusst nicht nur LEDs, sondern alles, was an dem
+Timer hängt! Servos, Tonerzeugung, etc.
+
+Besonders wichtig: Timer 0 für ~millis()~ und
+~delay()~. Standardvorteiler: 64. Bei Änderungen Zeiten entsprechend
+anpassen (Vervierfachen bei 256...)

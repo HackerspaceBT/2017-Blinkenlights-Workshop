@@ -1,0 +1,12 @@
+* Startpunkt digitaler Input
+Button Beispiel: File $\rightarrow$ Examples $\rightarrow$ Digital $\rightarrow$ Blink
+
+* Schaltplan
+
+- pulldown, extern
+- pullup, extern
+- pullup, intern
+
+* Unterbrechbare Abläufe starten
+
+millis() und so?
