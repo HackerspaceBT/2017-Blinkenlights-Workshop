@@ -1,8 +1,7 @@
 #+startup: beamer
 #+TITLE:     Blinkenlights Workshop
-#+AUTHOR:    Stephan Messlinger \\ Valentin Ochs
+#+AUTHOR:    Stephan Messlinger, Valentin Ochs
 #+EMAIL:     
-#+DATE:      2017-03-20
 #+LANGUAGE:  de
 #+LaTeX_CLASS: beamer
 #+LaTeX_CLASS_OPTIONS: [bigger]
@@ -19,8 +18,13 @@
 * Digital Out
 #+INCLUDE: "06-digitalout.org"
 
-* PWM
+* Analog Out
 #+INCLUDE: "07-pwm.org"
 
 * Digital In
 #+INCLUDE: "08-digitalin.org"
+
+* Analog In
+#+INCLUDE: "09-analogin.org"
+
+

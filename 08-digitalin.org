@@ -1,12 +1,58 @@
 * Startpunkt digitaler Input
-Button Beispiel: File $\rightarrow$ Examples $\rightarrow$ Digital $\rightarrow$ Blink
+Button Beispiel: File $\rightarrow$ Examples $\rightarrow$ Digital
+$\rightarrow$ Button
 
-* Schaltplan
+Geht nicht nur mit einfachen Schaltern und Tastern, sondern auch
+z.B. einer Lichtschranke oder Reed-Schaltern.
 
-- pulldown, extern
-- pullup, extern
-- pullup, intern
+* digitalRead
+~digitalRead(pin)~: 
+- ~HIGH~ falls Spannung an ~pin~ etwa 2.6 V oder höher
+- ~LOW~ falls Spannung an ~pin~ 2.1 V oder tiefer
+- Nur bei 5 V Versorgungsspannung, sonst andere Werte
 
-* Unterbrechbare Abläufe starten
+* Schaltplanvarianten
+[[./img/pullup.jpg]]
 
-millis() und so?
+* Unterbrechbare Abläufe starten (1)
+#+BEGIN_SRC C
+unsigned long button_time = 0;
+bool running = false;
+void loop() {
+  if(digitalRead(button_pin) == HIGH) {
+    running = true;
+    button_time = millis();
+  }
+  if(running) {
+    running = do_stuff(millis() - start_time);
+  }
+}
+#+END_SRC
+
+* Unterbrechbare Abläufe starten (2)
+#+BEGIN_SRC C
+bool do_stuff(unsigned long time_point)
+  if(time_point < 100) {
+    digitalWrite(led_pin, HIGH);
+  } else if(time_point < 200) {
+    digitalWrite(led_pin, LOW);
+  } else if(time_point < 1000) {
+    digitalWrite(led_pin, HIGH);
+  } else {
+    return false;
+  }
+  return true;
+}
+#+END_SRC
+
+* Prellen
+[[./img/bounce.png]]
+
+* Entprellen
+Auch: Debouncing
+
+- Hardware Lösung: Tiefpassfilter mit Kondensator
+- Software Lösung: Mehrmals Wert auslesen und warten, bis er sich
+  nicht mehr ändert
+- Hier ohne weitere Vertiefung, aber ihr wisst jetzt, wonach man
+  suchen muss :)

@@ -1,0 +1,14 @@
+* Startpunkt analoger Input
+AnalogInput Beispiel: File $\rightarrow$ Examples $\rightarrow$ Analog
+$\rightarrow$ AnalogInput
+
+* analogRead
+~analogRead(pin)~: 0-1023 für 0-5 Volt an Pin ~pin~.
+
+* Kombination mit analogWrite
+#+BEGIN_SRC C
+void loop() {
+  int value = analogRead(A0) / 4;
+  analogWrite(3, value);
+}
+#+END_SRC

@@ -15,7 +15,6 @@ void loop() {
 #+end_src
 
 * Setup
-
 ~pinMode(pin, modus)~ wählt für den Pin mit Nummer ~pin~ eine von drei
 Betriebsarten:
 
@@ -25,10 +24,7 @@ Betriebsarten:
 - ~INPUT_PULLUP~: Wie ~INPUT~, aber der Pin wird intern auf die
   Versorgunsspannung gezogen.
 
-TODO: Bild zu Pullups?
-
 * digitalWrite und delay
-
 ~digitalWrite(pin, zustand)~ setzt bei einem auf Output gestellten Pin
 die Ausgangsspannung:
 
@@ -39,7 +35,6 @@ die Ausgangsspannung:
 ~delay(ms)~ tut ~ms~ Millisekunden lang nichts.
 
 * Andere Blink Muster
-
 Zwei Sekunden lang an, eine halbe aus.
 
 #+BEAMER: \pause
@@ -51,12 +46,14 @@ digitalWrite(13, LOW);
 delay(500);
 #+end_src
 
-* Mehrere LEDs
-
-hier einfuegen?
-
-Timer + if
-
 * Schnelleres Blinken
+Was passiert, wenn man die Zeiten ganz niedrig setzt?
+#+BEAMER: \pause
 
-auf 1 ms oder so setzen, Verhaeltnisse aendern
+$\rightarrow$ Man sieht kein Blinken mehr
+#+BEAMER: \pause
+
+Was passiert, wenn die Zeitverhältnisse geändert werden?
+#+BEAMER: \pause
+
+$\rightarrow$ Dimmen
