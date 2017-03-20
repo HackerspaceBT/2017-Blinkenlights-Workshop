@@ -36,3 +36,11 @@ Valentin darf sich ausruhen. Ihr nicht.
 
 * LED Streifen
 #+INCLUDE: "13-smartled.org"
+
+* Stromversorgung
+** Macht Stephan
+
+*Däumchen dreh*
+
+* Sensoren
+#+INCLUDE: "15-sensors.org"

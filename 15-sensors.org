@@ -1,0 +1,38 @@
+** Anschluss von Sensoren
+- Analog: Sensor giebt eine Spannung aus, die gemessen wird
+  - Unkompliziert, aber durch den Arduino eingeschränkte Genauigkeit,
+    Präzision, Geschwindigkeit, Anzahl von Sensoren
+- Digital: Sensor wird durch ein serielles Interface (häufig SPI oder
+  I2C) an den Arduino angeschlossen.
+  - Erlaubt manchmal auch Einstellungen (Messfrequenz, -bereich)
+  - Etwas komplizierter zu programmieren
+  - Viele Sensoren an wenigen Pins möglich
+
+** Sensorbeispiele
+
+- Beschleunigung
+- Drehrate
+- Magnetfeld
+- Spannung
+- Luftfeuchtigkeit, Temperatur, Druck
+- Licht
+- Position (GPS)
+
+** Sensoren im Arduino
+
+Spannung (analoger Input) und Temperatur (interne Temperatur, wird
+über den Analog-Digital-Wandler gemessen).
+
+#+BEGIN_SRC C
+void setup() {
+  Serial.begin(115200);
+  // Temperaturmessung einrichten:
+  ADMUX = (_BV(REFS1) | _BV(REFS0) | _BV(MUX3));
+  ADCSRA |= _BV(ADEN);
+}
+void loop() {
+  ADCSRA |= _BV(ADSC); // Messung starten
+  while(ADCSRA & _BV(ADSC)) { } // Warte
+  Serial.println(ADCW); // Wert ausgeben
+}
+#+END_SRC
