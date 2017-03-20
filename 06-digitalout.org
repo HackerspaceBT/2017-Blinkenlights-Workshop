@@ -1,31 +1,21 @@
 * Startpunkt digitaler Output
 Blink Beispiel: File $\rightarrow$ Examples $\rightarrow$ Basics $\rightarrow$ Blink
 
-#+begin_src C
-void setup() {
-  pinMode(13, OUTPUT);
-}
+#+NAME: Blink
+#+INCLUDE: "code/blink.c" src C
 
-void loop() {
-  digitalWrite(13, HIGH);
-  delay(1000);
-  digitalWrite(13, LOW);
-  delay(1000);
-}
-#+end_src
-
-* Setup
-~pinMode(pin, modus)~ wählt für den Pin mit Nummer ~pin~ eine von drei
+* setup
+~pinmode(pin, modus)~ wählt für den Pin mit Nummer ~pin~ eine von drei
 Betriebsarten:
 
 - ~OUTPUT~: wird für Ausgabe verwendet, z.B. um LEDs zu schalten oder
   mit anderen Microcontrollern zu sprechen.
-- ~INPUT~: Die Spannung am Pin kann gelesen werden.
-- ~INPUT_PULLUP~: Wie ~INPUT~, aber der Pin wird intern auf die
+- ~INPUT~: die Spannung am Pin kann gelesen werden.
+- ~INPUT_PULLUP~: wie ~INPUT~, aber der Pin wird intern auf die
   Versorgunsspannung gezogen.
 
-* digitalWrite und delay
-~digitalWrite(pin, zustand)~ setzt bei einem auf Output gestellten Pin
+* digitalWrite und Delay
+~digitalWrite(pin, zustand)~ setzt bei einem auf ~OUTPUT~ gestellten Pin
 die Ausgangsspannung:
 
 - 0 Volt für ~LOW~
@@ -37,23 +27,18 @@ die Ausgangsspannung:
 * Andere Blink Muster
 Zwei Sekunden lang an, eine halbe aus.
 
-#+BEAMER: \pause
+#+beamer: \pause
 
-#+begin_src C
-digitalWrite(13, HIGH);
-delay(2000);
-digitalWrite(13, LOW);
-delay(500);
-#+end_src
+#+INCLUDE: "code/blink_pattern.c" src C
 
 * Schnelleres Blinken
 Was passiert, wenn man die Zeiten ganz niedrig setzt?
-#+BEAMER: \pause
+#+beamer: \pause
 
 $\rightarrow$ Man sieht kein Blinken mehr
-#+BEAMER: \pause
+#+beamer: \pause
 
 Was passiert, wenn die Zeitverhältnisse geändert werden?
-#+BEAMER: \pause
+#+beamer: \pause
 
 $\rightarrow$ Dimmen
