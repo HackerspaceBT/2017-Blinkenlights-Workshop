@@ -15,10 +15,10 @@ z.B. einer Lichtschranke oder Reed-Schaltern.
 [[./img/pullup.jpg]]
 
 * Unterbrechbare Abläufe starten (1)
-#+INCLUDE: "code/switch.c" src C :lines "1-13"
+#+INCLUDE: "code/switch.c" src C :lines "1-14"
 
 * Unterbrechbare Abläufe starten (2)
-#+INCLUDE: "code/switch.c" src C :lines "14-26"
+#+INCLUDE: "code/switch.c" src C :lines "15-27"
 
 * Prellen
 [[./img/bounce.png]]

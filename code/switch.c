@@ -1,6 +1,7 @@
+int const button_pin = 12, led_pin = 13;
 unsigned long button_time = 0;
 bool running = false;
-void setup() {}
+void setup() { pinMode(13, OUTPUT); }
 void loop() {
   if(digitalRead(button_pin) == HIGH) {
     running = true;
