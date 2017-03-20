@@ -41,3 +41,23 @@
 
 * Sensoren
 #+INCLUDE: "15-sensors.org"
+* Basteln
+** Basteln                                                          :B_frame:
+   :PROPERTIES:
+   :BEAMER_env: frame
+   :END:
+
+Vorschläge?
+
+Mehr als ausreichend vorhanden:
+- NTC Widerstände
+- Analoge Hall-Sensoren
+
+Nicht ganz so viel auf Vorrat:
+- IR Empfänger
+- Gyroskop, Beschleunigungssensor, Luftdruck
+- Ultraschall Sensor
+- PIR Sensor
+- Kurze LED-Streifen
+- Anderes
+

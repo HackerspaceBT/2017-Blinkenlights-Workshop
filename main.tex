@@ -1,4 +1,4 @@
-% Created 2017-03-20 Mon 09:13
+% Created 2017-03-20 Mon 09:26
 % Intended LaTeX compiler: pdflatex
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
@@ -43,8 +43,8 @@
 \maketitle
 
 \section{Digital Out}
-\label{sec:org117c394}
-\begin{frame}[fragile,label={sec:org5c28559}]{Startpunkt digitaler Output}
+\label{sec:orgf1734bc}
+\begin{frame}[fragile,label={sec:orgdeaa9ea}]{Startpunkt digitaler Output}
  Blink Beispiel: File \(\rightarrow\) Examples \(\rightarrow\) Basics \(\rightarrow\) Blink
 
 \begin{minted}[]{c}
@@ -61,7 +61,7 @@ void loop() {
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org561c0dd}]{setup}
+\begin{frame}[fragile,label={sec:orgbdd5188}]{setup}
  \texttt{pinmode(pin, modus)} wählt für den Pin mit Nummer \texttt{pin} eine von drei
 Betriebsarten:
 
@@ -74,7 +74,7 @@ Versorgunsspannung gezogen.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:orge296d77}]{digitalWrite und Delay}
+\begin{frame}[fragile,label={sec:org63febe0}]{digitalWrite und Delay}
  \texttt{digitalWrite(pin, zustand)} setzt bei einem auf \texttt{OUTPUT} gestellten Pin
 die Ausgangsspannung:
 
@@ -87,7 +87,7 @@ Versorgungsspannung ist)
 \texttt{delay(ms)} tut \texttt{ms} Millisekunden lang nichts.
 \end{frame}
 
-\begin{frame}[fragile,label={sec:orge18d99b}]{Andere Blink Muster}
+\begin{frame}[fragile,label={sec:org70c608f}]{Andere Blink Muster}
  Zwei Sekunden lang an, eine halbe aus.
 
 \pause
@@ -106,7 +106,7 @@ void loop() {
 \end{minted}
 \end{frame}
 
-\begin{frame}[label={sec:orga2f53df}]{Schnelleres Blinken}
+\begin{frame}[label={sec:org11652d4}]{Schnelleres Blinken}
 Was passiert, wenn man die Zeiten ganz niedrig setzt?
 \pause
 
@@ -120,8 +120,8 @@ Was passiert, wenn die Zeitverhältnisse geändert werden?
 \end{frame}
 
 \section{Analog Out}
-\label{sec:orgf3ef09a}
-\begin{frame}[fragile,label={sec:org7234cb7}]{analogWrite}
+\label{sec:orgef08f9b}
+\begin{frame}[fragile,label={sec:org26bb56f}]{analogWrite}
  \texttt{analogWrite(pin, wert)} schaltet den Pin automatisch an und aus, mit
 variablen An-/Aus-Zeiten 
 
@@ -135,7 +135,7 @@ variablen An-/Aus-Zeiten
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orge2ad78c}]{PWM Funktionsweise: Zähler + Vergleich}
+\begin{frame}[label={sec:orgd0a2c72}]{PWM Funktionsweise: Zähler + Vergleich}
 \begin{tikzpicture}
 \begin{axis}[xlabel=Zeit / s, ylabel=Zähler, ymin=-0.02*256, ymax=1.02*256]
 \addplot[blue, domain=0:0.001, samples=512] { floor(mod(x*490*2*pi*256, 256)) };
@@ -144,7 +144,7 @@ variablen An-/Aus-Zeiten
 \end{tikzpicture}
 \end{frame}
 
-\begin{frame}[label={sec:orgd8c2771}]{PWM, Schwellwert 128}
+\begin{frame}[label={sec:orgd30fb8a}]{PWM, Schwellwert 128}
 \begin{tikzpicture}
 \begin{axis}[xlabel=Zeit / s, ylabel=Spannung / V, ymin=-0.1, ymax=5.1]
 \addplot[blue, domain=0:0.001, samples=500] { 5*ceil(0.5-mod(x*490*2*pi, 1)) };
@@ -153,7 +153,7 @@ variablen An-/Aus-Zeiten
 \end{tikzpicture}
 \end{frame}
 
-\begin{frame}[label={sec:org182e33f}]{PWM, Schwellwert 16}
+\begin{frame}[label={sec:org937eccc}]{PWM, Schwellwert 16}
 \begin{tikzpicture}
 \begin{axis}[xlabel=Zeit / s, ylabel=Spannung / V, ymin=-0.1, ymax=5.1]
 \addplot[blue, domain=0:0.001, samples=500] { 5*ceil(0.0625-mod(x*490*2*pi, 1)) };
@@ -162,7 +162,7 @@ variablen An-/Aus-Zeiten
 \end{tikzpicture}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org3f7dd21}]{Einfacher PWM Code}
+\begin{frame}[fragile,label={sec:orgf7ddd8b}]{Einfacher PWM Code}
  \begin{minted}[]{c}
 int const led_pin = 11;
 void setup() {
@@ -179,7 +179,7 @@ void loop() {
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:orge0edc2f}]{Datentypen (1)}
+\begin{frame}[fragile,label={sec:orgb4ec025}]{Datentypen (1)}
  \begin{itemize}
 \item \texttt{unsigned long time} und \texttt{int value} definieren Variablen.
 \item \texttt{unsigned long} und \texttt{int} sind die Typen, \texttt{time} und \texttt{value} die
@@ -199,7 +199,7 @@ Typ & Wertebereich & \texttt{unsigned} Wertebereich\\
 \end{center}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:orgdef0c32}]{Datentypen (2)}
+\begin{frame}[fragile,label={sec:org4f8bf6f}]{Datentypen (2)}
  \begin{itemize}
 \item \texttt{float} für Gleitkommazahlen (sehr langsam!)
 \item \texttt{double} für genauere Gleitkommazahlen (unglaublich langsam)
@@ -217,7 +217,7 @@ Definition nicht ändern. Vorteile:
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org407cff6}]{PWM Frequenz}
+\begin{frame}[label={sec:orge615a93}]{PWM Frequenz}
 490 Hz sind bei schnellen Bewegungen sichtbar.
 
 Bestimmung der Frequenz: Taktfrequenz / Vorteiler / Zählergrö\ss{}e
@@ -232,7 +232,7 @@ Bestimmung der Frequenz: Taktfrequenz / Vorteiler / Zählergrö\ss{}e
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:orgedf8568}]{PWM Vorteiler: Timer 0, Pins 5 und 6}
+\begin{frame}[fragile,label={sec:orge9067be}]{PWM Vorteiler: Timer 0, Pins 5 und 6}
  \begin{center}
 \begin{tabular}{rrr}
 Einstellung & Teiler & Frequenz\\
@@ -251,7 +251,7 @@ TCCR0B = (TCCR0B & 0b11111000) | Einstellung
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:orgbfdfc20}]{PWM Vorteiler: Timer 1, Pins 9 und 10}
+\begin{frame}[fragile,label={sec:org480b062}]{PWM Vorteiler: Timer 1, Pins 9 und 10}
  \begin{center}
 \begin{tabular}{rrr}
 Einstellung & Teiler & Frequenz\\
@@ -270,7 +270,7 @@ TCCR1B = (TCCR0B & 0b11111000) | Einstellung
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:orge477aed}]{PWM Vorteiler: Timer 2, Pins 11 und 3}
+\begin{frame}[fragile,label={sec:orgde81372}]{PWM Vorteiler: Timer 2, Pins 11 und 3}
  \begin{center}
 \begin{tabular}{rrr}
 Einstellung & Teiler & Frequenz\\
@@ -291,7 +291,7 @@ TCCR2B = (TCCR2B & 0b11111000) | Einstellung
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:orgc63b83f}]{Vorsicht}
+\begin{frame}[fragile,label={sec:org0fab25d}]{Vorsicht}
  Frequenzänderung beeinflusst nicht nur LEDs, sondern alles, was an dem
 Timer hängt! Servos, Tonerzeugung, etc.
 
@@ -301,8 +301,8 @@ anpassen (Vervierfachen bei 256\ldots{})
 \end{frame}
 
 \section{Digital In}
-\label{sec:orgc80df0d}
-\begin{frame}[label={sec:org77d7e52}]{Startpunkt digitaler Input}
+\label{sec:org37f639d}
+\begin{frame}[label={sec:org83d0818}]{Startpunkt digitaler Input}
 Button Beispiel: File \(\rightarrow\) Examples \(\rightarrow\) Digital
 \(\rightarrow\) Button
 
@@ -310,7 +310,7 @@ Geht nicht nur mit einfachen Schaltern und Tastern, sondern auch
 z.B. einer Lichtschranke oder Reed-Schaltern.
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org804b556}]{digitalRead}
+\begin{frame}[fragile,label={sec:org337a64a}]{digitalRead}
  \texttt{digitalRead(pin)}: 
 \begin{itemize}
 \item \texttt{HIGH} falls Spannung an \texttt{pin} etwa 2.6 V oder höher
@@ -319,13 +319,13 @@ z.B. einer Lichtschranke oder Reed-Schaltern.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgfce5c9c}]{Schaltplanvarianten}
+\begin{frame}[label={sec:orgd4dd171}]{Schaltplanvarianten}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./img/pullup.jpg}
 \end{center}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org3bb874c}]{Unterbrechbare Abläufe starten (1)}
+\begin{frame}[fragile,label={sec:org1bfb978}]{Unterbrechbare Abläufe starten (1)}
  \begin{minted}[]{c}
 unsigned long button_time = 0;
 bool running = false;
@@ -342,7 +342,7 @@ void loop() {
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:orgb069c0e}]{Unterbrechbare Abläufe starten (2)}
+\begin{frame}[fragile,label={sec:org12d6a6d}]{Unterbrechbare Abläufe starten (2)}
  \begin{minted}[]{c}
 bool do_stuff(unsigned long time_point)
   if(time_point < 100) {
@@ -359,13 +359,13 @@ bool do_stuff(unsigned long time_point)
 \end{minted}
 \end{frame}
 
-\begin{frame}[label={sec:org68f54be}]{Prellen}
+\begin{frame}[label={sec:org720126d}]{Prellen}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./img/bounce.png}
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:org05464e2}]{Entprellen}
+\begin{frame}[label={sec:org4e7fb6f}]{Entprellen}
 Auch: Debouncing
 
 \begin{itemize}
@@ -378,17 +378,17 @@ suchen muss :)
 \end{frame}
 
 \section{Analog In}
-\label{sec:org000ff13}
-\begin{frame}[label={sec:org9f79597}]{Startpunkt analoger Input}
+\label{sec:orgfd0dcc1}
+\begin{frame}[label={sec:orga5bdaa2}]{Startpunkt analoger Input}
 AnalogInput Beispiel: File \(\rightarrow\) Examples \(\rightarrow\) Analog
 \(\rightarrow\) AnalogInput
 \end{frame}
 
-\begin{frame}[fragile,label={sec:orgd306678}]{analogRead}
+\begin{frame}[fragile,label={sec:org99a21d8}]{analogRead}
  \texttt{analogRead(pin)}: 0-1023 für 0-5 Volt an Pin \texttt{pin}.
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org25f138c}]{Kombination mit analogWrite}
+\begin{frame}[fragile,label={sec:org2ad0f16}]{Kombination mit analogWrite}
  \begin{minted}[]{c}
 void setup() {
     pinMode(3, OUTPUT);
@@ -402,7 +402,7 @@ void loop() {
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org1da21d0}]{An den PC senden}
+\begin{frame}[fragile,label={sec:org3804105}]{An den PC senden}
  \begin{minted}[]{c}
 void setup() {
   Serial.begin(115200);
@@ -419,7 +419,7 @@ Die Arduino IDE hat einen Plotter, mit dem man den zeitlichen Verlauf
 von Zahlen beobachten kann.
 \end{frame}
 
-\begin{frame}[label={sec:org54d61c3}]{Spannungsbereich}
+\begin{frame}[label={sec:org9654374}]{Spannungsbereich}
 Maximale Spannung: Versorgungsspannung
 \pause
 
@@ -427,13 +427,13 @@ Darüber: Spannungsteiler
 \end{frame}
 
 \section{Bunte Dinge}
-\label{sec:orgb2c06f0}
-\begin{frame}[label={sec:orgac0591a}]{Macht Stephan}
+\label{sec:org33c00a8}
+\begin{frame}[label={sec:orgf251643}]{Macht Stephan}
 \end{frame}
 
 \section{Mehrere LEDs}
-\label{sec:orgd5fd37c}
-\begin{frame}[label={sec:org4513488}]{Diskret}
+\label{sec:org4807f79}
+\begin{frame}[label={sec:org02c4d24}]{Diskret}
 Vorteile:
 \begin{itemize}
 \item Einfach
@@ -448,7 +448,7 @@ Nachteile:
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org7ad65e7}]{Matrix}
+\begin{frame}[label={sec:org3c83774}]{Matrix}
 Vorteile:
 \begin{itemize}
 \item Kann je nach Methode mit \(n\) Pins bis zu \(n^2-n\) LEDs ansteuern
@@ -464,7 +464,7 @@ Nachteile:
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org431fce3}]{Schieberegister}
+\begin{frame}[label={sec:orgd99889e}]{Schieberegister}
 \begin{itemize}
 \item Englisch: Shift register
 \item Mehrere Ausgänge, z.B. 8
@@ -487,8 +487,8 @@ Nachteile:
 \end{frame}
 
 \section{LED Streifen}
-\label{sec:org91103ee}
-\begin{frame}[label={sec:orgd040075}]{WS2812, APA102\ldots{}}
+\label{sec:orgbffc90a}
+\begin{frame}[label={sec:org46736ad}]{WS2812, APA102\ldots{}}
 \begin{itemize}
 \item Mehrere LEDs auf Streifen
 \item Ähnlich zu Schieberegistern
@@ -497,7 +497,7 @@ Nachteile:
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orga843e69}]{Libraries}
+\begin{frame}[label={sec:orgd246827}]{Libraries}
 \begin{itemize}
 \item Sketch \(\rightarrow\) Include Library \(\rightarrow\) Manage Libraries
 \item Modularer Code, bei Arduino häufig zum Ansteuern von externer Hardware
@@ -506,7 +506,7 @@ Nachteile:
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:orgbb6afba}]{Beispielcode}
+\begin{frame}[fragile,label={sec:org7bd93cc}]{Beispielcode}
  \begin{minted}[]{c}
 #include <Adafruit_NeoPixel.h>
 Adafruit_NeoPixel strip(144, 13,
@@ -524,7 +524,7 @@ void loop() {
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org1a60cde}]{Arrays}
+\begin{frame}[fragile,label={sec:orgd55b74c}]{Arrays}
  \ldots{} speichern viele Werte gleichen Typs unter einem Namen. Das erste
 Element hat Index 0.
 
@@ -537,7 +537,7 @@ Serial.print(many_values[0]+many_values[19]);
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:orgce8a086}]{Laufender Regenbogen}
+\begin{frame}[fragile,label={sec:orgf235a4d}]{Laufender Regenbogen}
  \setbeamerfont{smaller}{size=\scriptsize}
 \usebeamerfont{smaller}
 \begin{minted}[]{c}
@@ -567,13 +567,13 @@ void loop() {
 \end{frame}
 
 \section{Stromversorgung}
-\label{sec:org052e7c5}
-\begin{frame}[label={sec:org3c0d40a}]{Macht Stephan}
+\label{sec:org149f4e9}
+\begin{frame}[label={sec:orgf510b49}]{Macht Stephan}
 \end{frame}
 
 \section{Sensoren}
-\label{sec:orgc2126ef}
-\begin{frame}[label={sec:orgb8f8aa0}]{Anschluss von Sensoren}
+\label{sec:orgc8d8fb2}
+\begin{frame}[label={sec:orge3c6606}]{Anschluss von Sensoren}
 \begin{itemize}
 \item Analog: Sensor giebt eine Spannung aus, die gemessen wird
 \begin{itemize}
@@ -590,7 +590,7 @@ I2C) an den Arduino angeschlossen.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org269d799}]{Sensorbeispiele}
+\begin{frame}[label={sec:org0962667}]{Sensorbeispiele}
 \begin{itemize}
 \item Beschleunigung
 \item Drehrate
@@ -602,7 +602,7 @@ I2C) an den Arduino angeschlossen.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:orgfc228fa}]{Sensoren im Arduino}
+\begin{frame}[fragile,label={sec:orgf4fa527}]{Sensoren im Arduino}
  Spannung (analoger Input) und Temperatur (interne Temperatur, wird
 über den Analog-Digital-Wandler gemessen).
 
@@ -619,5 +619,26 @@ void loop() {
   Serial.println(ADCW); // Wert ausgeben
 }
 \end{minted}
+\end{frame}
+\section{Basteln}
+\label{sec:org25a4807}
+\begin{frame}[label={sec:orgfdbd452}]{Basteln}
+Vorschläge?
+
+Mehr als ausreichend vorhanden:
+\begin{itemize}
+\item NTC Widerstände
+\item Analoge Hall-Sensoren
+\end{itemize}
+
+Nicht ganz so viel auf Vorrat:
+\begin{itemize}
+\item IR Empfänger
+\item Gyroskop, Beschleunigungssensor, Luftdruck
+\item Ultraschall Sensor
+\item PIR Sensor
+\item Kurze LED-Streifen
+\item Anderes
+\end{itemize}
 \end{frame}
 \end{document}
