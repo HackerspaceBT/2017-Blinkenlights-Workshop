@@ -1,0 +1,70 @@
+* WS2812, APA102...
+- Mehrere LEDs auf Streifen
+- Ähnlich zu Schieberegistern
+- Eingebaute Logik zum Dimmen
+- Ansteuerung durch fertige Libraries
+
+* Libraries
+- Sketch $\rightarrow$ Include Library $\rightarrow$ Manage Libraries
+- Modularer Code, bei Arduino häufig zum Ansteuern von externer Hardware
+- Für WS2812: Adafruit NeoPixel
+- Für APA102: APA102
+
+* Beispielcode
+
+#+BEGIN_SRC C
+#include <Adafruit_NeoPixel.h>
+Adafruit_NeoPixel strip(144, 13, NEO_GRB + NEO_KHZ800);
+int i = 0;
+void setup() {
+  strip.begin();
+}
+void loop() {
+  strip.setPixelColor(i, 255, 0, 0);
+  strip.show();
+  delay(10);
+  strip.setPixelColor(i, 0, 0, 0);
+  i++;
+  if(i == 144) i = 0;
+}
+#+END_SRC
+
+* Arrays
+... speichern viele Werte gleichen Typs unter einem Namen. Das erste
+Element hat Index 0.
+
+Beispiel:
+#+BEGIN_SRC C
+int many_values[20];
+for(int i = 0; i < 20; i++)
+  many_values[i] = i;
+Serial.print(many_values[0]+many_values[19]);
+#+END_SRC
+
+* Laufender Regenbogen (1)
+#+BEAMER: \setbeamerfont{smaller}{size=\scriptsize}
+#+BEAMER: \usebeamerfont{smaller}
+#+BEGIN_SRC C
+#include <Adafruit_NeoPixel.h>
+Adafruit_NeoPixel strip(144, 13, NEO_GRB + NEO_KHZ800);
+uint32_t colors[144];
+int i = 0;
+void setup() {
+  strip.begin();
+  for(i = 0; i < 48; i++) {
+    unsigned char v = i*255/48;
+    colors[i]    = strip.Color(255-v, v, 0);
+    colors[i+48] = strip.Color(0, 255-v, v);
+    colors[i+96] = strip.Color(v, 0, 255-v);
+  }
+}
+void loop() {
+  for(int j = i; j < 144-i; j++)
+    strip.setPixelColor(i+j,     colors[j]);
+  for(int j = 144-i; j < 144; j++)
+    strip.setPixelColor(i+j-144, colors[j]);
+  strip.show();
+  i++;
+  if(i == 144) i = 0;
+}
+#+END_SRC

@@ -11,39 +11,34 @@ $\rightarrow$ Pulsweitenmodulation
 - Die PWM Pins sind auf dem Arduino mit ~ markiert.
 
 * PWM Funktionsweise: Zähler + Vergleich
-#+BEGIN_LATEX
-\begin{tikzpicture}
+#+BEGIN_tikzpicture
 \begin{axis}[xlabel=Zeit / s, ylabel=Zähler, ymin=-0.02*256, ymax=1.02*256]
 \addplot[blue, domain=0:0.001, samples=512] { floor(mod(x*490*2*pi*256, 256)) };
 \addplot[red, domain=0:0.001, samples=2] { 128 };
 \end{axis}
-\end{tikzpicture}
-#+END_LATEX
+#+END_tikzpicture
 
 * PWM, Schwellwert 128
-#+BEGIN_LATEX
-\begin{tikzpicture}
+#+BEGIN_tikzpicture
 \begin{axis}[xlabel=Zeit / s, ylabel=Spannung / V, ymin=-0.1, ymax=5.1]
 \addplot[blue, domain=0:0.001, samples=500] { 5*ceil(0.5-mod(x*490*2*pi, 1)) };
 \addplot[red, domain=0:0.001, samples=2] { 2.5 };
 \end{axis}
-\end{tikzpicture}
-#+END_LATEX
+#+END_tikzpicture
 
 * PWM, Schwellwert 16
-#+BEGIN_LATEX
-\begin{tikzpicture}
+#+BEGIN_tikzpicture
 \begin{axis}[xlabel=Zeit / s, ylabel=Spannung / V, ymin=-0.1, ymax=5.1]
 \addplot[blue, domain=0:0.001, samples=500] { 5*ceil(0.0625-mod(x*490*2*pi, 1)) };
 \addplot[red, domain=0:0.001, samples=2] { 16./256 };
 \end{axis}
-\end{tikzpicture}
-#+END_LATEX
+#+END_tikzpicture
 
 * Einfacher PWM Code
 #+begin_src C
+int const led_pin = 11;
 void setup() {
-  pinMode(11, OUTPUT);
+  pinMode(led_pin, OUTPUT);
 }
 void loop() {
   // Zeit seit Beginn des Programms
@@ -51,9 +46,33 @@ void loop() {
   // Berechne eine Sägezahn mit 0.1 Hz
   int value = 255 * time / 4000;
   // Verwende den Wert als Schwellwert
-  analogWrite(11, value);
+  analogWrite(led_pin, value);
 }
 #+end_src
+
+* Datentypen (1)
+- ~unsigned long time~ und ~int value~ definieren Variablen.
+- ~unsigned long~ und ~int~ sind die Typen, ~time~ und ~value~ die
+  Namen, bzw. Identifier.
+- Normal sind Typen vorzeichenbehaftet, durch ~unsigned~ haben sie
+  einen nicht-negativen Wertebereich
+- Kleinere Datentypen sind schneller
+
+| Typ    | Wertebereich             | ~unsigned~ Wertebereich |
+| ~char~ | $-2^7$  bis $2^7-1$      | 0 bis $2^8-1$           |
+| ~int~  | $-2^{15}$ bis $2^{15}-1$ | 0 bis $2^{16}-1$        |
+| ~long~ | $-2^{31}$ bis $2^{31}-1$ | 0 bis $2^{32}-1$        |
+
+* Datentypen (2)
+- ~float~ für Gleitkommazahlen (sehr langsam!)
+- ~double~ für genauere Gleitkommazahlen (unglaublich langsam)
+- ~const~ Suffix (z.B. ~int const~) für Werte, die sich nach ihrer
+  Definition nicht ändern. Vorteile:
+  - Etwas lesbarer
+  - Kann zu schnelleren Programmen führen
+- Zu gro\ss{}e (oder kleine) Werte führen zu Überlauf:
+  - Bei ~char~: 127+1 $\rightarrow$ -128
+  - Bei ~unsigned char~: 0 - 1 $\rightarrow$ 255
 
 * PWM Frequenz
 490 Hz sind bei schnellen Bewegungen sichtbar.

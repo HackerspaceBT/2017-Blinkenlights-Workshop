@@ -12,3 +12,25 @@ void loop() {
   analogWrite(3, value);
 }
 #+END_SRC
+
+* An den PC senden
+#+BEGIN_SRC C
+void setup() {
+  Serial.begin(115200);
+}
+void loop() {
+  Serial.print("Aktueller Wert: ");
+  Serial.println(analogRead(A0));
+}
+#+END_SRC
+
+Auch zur Fehlersuche nützlich!
+
+Die Arduino IDE hat einen Plotter, mit dem man den zeitlichen Verlauf
+von Zahlen beobachten kann.
+
+* Spannungsbereich
+Maximale Spannung: Versorgungsspannung
+#+BEAMER: \pause
+
+Darüber: Spannungsteiler

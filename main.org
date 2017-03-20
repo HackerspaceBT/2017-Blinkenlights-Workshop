@@ -27,4 +27,12 @@
 * Analog In
 #+INCLUDE: "09-analogin.org"
 
+* Stephan
+** Stephan
+Valentin darf sich ausruhen. Ihr nicht.
 
+* Mehrere LEDs
+#+INCLUDE: "12-multiled.org"
+
+* LED Streifen
+#+INCLUDE: "13-smartled.org"

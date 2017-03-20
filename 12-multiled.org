@@ -1,0 +1,35 @@
+* Diskret
+Vorteile:
+- Einfach
+- PWM (bei bis zu 6) möglich
+
+Nachteile:
+- 1 Pin pro LED
+- Ab 7 LEDs kein PWM mehr (oder nur in Gruppen)
+- 1 RGB LED braucht 3 Pins
+
+* Matrix
+Vorteile:
+- Kann je nach Methode mit $n$ Pins bis zu $n^2-n$ LEDs ansteuern
+
+Nachteile:
+- Kompliziert
+- Niedrige Wiederholrate
+- Reduzierte Helligkeit
+- Bei grö\ss{}eren Spitzenströmen werden externe Treiber benötigt
+- Kein (hardware-beschleunigtes) Dimmen
+
+* Schieberegister
+- Englisch: Shift register
+- Mehrere Ausgänge, z.B. 8
+- Digitale Steuerung, z.B. SPI oder I2C
+- Zu viele Werte $\rightarrow$ alte Werte werden weitergeschoben
+
+Vorteile:
+- Einfach
+- Benötigt wenige (i.d.R. < 4) Pins
+- Leicht erweiterbar
+
+Nachteile:
+- Kein (hardware-beschleunigtes) Dimmen
+- Wiederholrate sinkt mit 1/n

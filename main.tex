@@ -1,4 +1,4 @@
-% Created 2017-03-18 Sat 05:14
+% Created 2017-03-20 Mon 01:52
 % Intended LaTeX compiler: pdflatex
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
@@ -36,15 +36,15 @@
  pdftitle={Blinkenlights Workshop},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 25.2.1 (Org mode 9.0.5)}, 
+ pdfcreator={Emacs 24.5.1 (Org mode 9.0.5)}, 
  pdflang={Germanb}}
 \begin{document}
 
 \maketitle
 
 \section{Digital Out}
-\label{sec:org365a622}
-\begin{frame}[fragile,label={sec:org8c67f30}]{Startpunkt digitaler Output}
+\label{sec:orga8909c0}
+\begin{frame}[fragile,label={sec:orga9dcb9a}]{Startpunkt digitaler Output}
  Blink Beispiel: File \(\rightarrow\) Examples \(\rightarrow\) Basics \(\rightarrow\) Blink
 
 \begin{minted}[]{c}
@@ -61,7 +61,7 @@ void loop() {
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org73facc3}]{Setup}
+\begin{frame}[fragile,label={sec:org5978ddd}]{Setup}
  \texttt{pinMode(pin, modus)} wählt für den Pin mit Nummer \texttt{pin} eine von drei
 Betriebsarten:
 
@@ -74,7 +74,7 @@ Versorgunsspannung gezogen.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org7e2609f}]{digitalWrite und delay}
+\begin{frame}[fragile,label={sec:org8e19988}]{digitalWrite und delay}
  \texttt{digitalWrite(pin, zustand)} setzt bei einem auf Output gestellten Pin
 die Ausgangsspannung:
 
@@ -87,7 +87,7 @@ Versorgungsspannung ist)
 \texttt{delay(ms)} tut \texttt{ms} Millisekunden lang nichts.
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org86d78a0}]{Andere Blink Muster}
+\begin{frame}[fragile,label={sec:org77fbbf9}]{Andere Blink Muster}
  Zwei Sekunden lang an, eine halbe aus.
 
 \pause
@@ -100,7 +100,7 @@ delay(500);
 \end{minted}
 \end{frame}
 
-\begin{frame}[label={sec:orgaa27ad5}]{Schnelleres Blinken}
+\begin{frame}[label={sec:orgf85b185}]{Schnelleres Blinken}
 Was passiert, wenn man die Zeiten ganz niedrig setzt?
 \pause
 
@@ -114,8 +114,8 @@ Was passiert, wenn die Zeitverhältnisse geändert werden?
 \end{frame}
 
 \section{Analog Out}
-\label{sec:orga26fa18}
-\begin{frame}[fragile,label={sec:org6dd008e}]{analogWrite}
+\label{sec:org870f832}
+\begin{frame}[fragile,label={sec:orge553d25}]{analogWrite}
  \texttt{analogWrite(pin, wert)} schaltet den Pin automatisch an und aus, mit
 variablen An-/Aus-Zeiten 
 
@@ -129,43 +129,38 @@ variablen An-/Aus-Zeiten
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgac95e39}]{PWM Funktionsweise: Zähler + Vergleich}
-\begin{LATEX}
+\begin{frame}[label={sec:orgf1e05eb}]{PWM Funktionsweise: Zähler + Vergleich}
 \begin{tikzpicture}
 \begin{axis}[xlabel=Zeit / s, ylabel=Zähler, ymin=-0.02*256, ymax=1.02*256]
 \addplot[blue, domain=0:0.001, samples=512] { floor(mod(x*490*2*pi*256, 256)) };
 \addplot[red, domain=0:0.001, samples=2] { 128 };
 \end{axis}
 \end{tikzpicture}
-\end{LATEX}
 \end{frame}
 
-\begin{frame}[label={sec:org5b0b1ba}]{PWM, Schwellwert 128}
-\begin{LATEX}
+\begin{frame}[label={sec:org1a6de19}]{PWM, Schwellwert 128}
 \begin{tikzpicture}
 \begin{axis}[xlabel=Zeit / s, ylabel=Spannung / V, ymin=-0.1, ymax=5.1]
 \addplot[blue, domain=0:0.001, samples=500] { 5*ceil(0.5-mod(x*490*2*pi, 1)) };
 \addplot[red, domain=0:0.001, samples=2] { 2.5 };
 \end{axis}
 \end{tikzpicture}
-\end{LATEX}
 \end{frame}
 
-\begin{frame}[label={sec:orgad18e5d}]{PWM, Schwellwert 16}
-\begin{LATEX}
+\begin{frame}[label={sec:org22dc7de}]{PWM, Schwellwert 16}
 \begin{tikzpicture}
 \begin{axis}[xlabel=Zeit / s, ylabel=Spannung / V, ymin=-0.1, ymax=5.1]
 \addplot[blue, domain=0:0.001, samples=500] { 5*ceil(0.0625-mod(x*490*2*pi, 1)) };
 \addplot[red, domain=0:0.001, samples=2] { 16./256 };
 \end{axis}
 \end{tikzpicture}
-\end{LATEX}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org64089f9}]{Einfacher PWM Code}
+\begin{frame}[fragile,label={sec:org3a551dc}]{Einfacher PWM Code}
  \begin{minted}[]{c}
+int const led_pin = 11;
 void setup() {
-  pinMode(11, OUTPUT);
+  pinMode(led_pin, OUTPUT);
 }
 void loop() {
   // Zeit seit Beginn des Programms
@@ -173,12 +168,50 @@ void loop() {
   // Berechne eine Sägezahn mit 0.1 Hz
   int value = 255 * time / 4000;
   // Verwende den Wert als Schwellwert
-  analogWrite(11, value);
+  analogWrite(led_pin, value);
 }
 \end{minted}
 \end{frame}
 
-\begin{frame}[label={sec:org902231c}]{PWM Frequenz}
+\begin{frame}[fragile,label={sec:orga6b130d}]{Datentypen (1)}
+ \begin{itemize}
+\item \texttt{unsigned long time} und \texttt{int value} definieren Variablen.
+\item \texttt{unsigned long} und \texttt{int} sind die Typen, \texttt{time} und \texttt{value} die
+Namen, bzw. Identifier.
+\item Normal sind Typen vorzeichenbehaftet, durch \texttt{unsigned} haben sie
+einen nicht-negativen Wertebereich
+\item Kleinere Datentypen sind schneller
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{lll}
+Typ & Wertebereich & \texttt{unsigned} Wertebereich\\
+\texttt{char} & \(-2^7\)  bis \(2^7-1\) & 0 bis \(2^8-1\)\\
+\texttt{int} & \(-2^{15}\) bis \(2^{15}-1\) & 0 bis \(2^{16}-1\)\\
+\texttt{long} & \(-2^{31}\) bis \(2^{31}-1\) & 0 bis \(2^{32}-1\)\\
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:org8e4a1f5}]{Datentypen (2)}
+ \begin{itemize}
+\item \texttt{float} für Gleitkommazahlen (sehr langsam!)
+\item \texttt{double} für genauere Gleitkommazahlen (unglaublich langsam)
+\item \texttt{const} Suffix (z.B. \texttt{int const}) für Werte, die sich nach ihrer
+Definition nicht ändern. Vorteile:
+\begin{itemize}
+\item Etwas lesbarer
+\item Kann zu schnelleren Programmen führen
+\end{itemize}
+\item Zu gro\ss{}e (oder kleine) Werte führen zu Überlauf:
+\begin{itemize}
+\item Bei \texttt{char}: 127+1 \(\rightarrow\) -128
+\item Bei \texttt{unsigned char}: 0 - 1 \(\rightarrow\) 255
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:org9369651}]{PWM Frequenz}
 490 Hz sind bei schnellen Bewegungen sichtbar.
 
 Bestimmung der Frequenz: Taktfrequenz / Vorteiler / Zählergrö\ss{}e
@@ -193,7 +226,7 @@ Bestimmung der Frequenz: Taktfrequenz / Vorteiler / Zählergrö\ss{}e
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org232a711}]{PWM Vorteiler: Timer 0, Pins 5 und 6}
+\begin{frame}[fragile,label={sec:org4cb99c3}]{PWM Vorteiler: Timer 0, Pins 5 und 6}
  \begin{center}
 \begin{tabular}{rrr}
 Einstellung & Teiler & Frequenz\\
@@ -212,7 +245,7 @@ TCCR0B = (TCCR0B & 0b11111000) | Einstellung
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:orgf37ded2}]{PWM Vorteiler: Timer 1, Pins 9 und 10}
+\begin{frame}[fragile,label={sec:orgb7bc80e}]{PWM Vorteiler: Timer 1, Pins 9 und 10}
  \begin{center}
 \begin{tabular}{rrr}
 Einstellung & Teiler & Frequenz\\
@@ -231,7 +264,7 @@ TCCR1B = (TCCR0B & 0b11111000) | Einstellung
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org4ab3286}]{PWM Vorteiler: Timer 2, Pins 11 und 3}
+\begin{frame}[fragile,label={sec:org414149e}]{PWM Vorteiler: Timer 2, Pins 11 und 3}
  \begin{center}
 \begin{tabular}{rrr}
 Einstellung & Teiler & Frequenz\\
@@ -252,7 +285,7 @@ TCCR2B = (TCCR2B & 0b11111000) | Einstellung
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:orgfbf39f2}]{Vorsicht}
+\begin{frame}[fragile,label={sec:orgfdb695a}]{Vorsicht}
  Frequenzänderung beeinflusst nicht nur LEDs, sondern alles, was an dem
 Timer hängt! Servos, Tonerzeugung, etc.
 
@@ -262,8 +295,8 @@ anpassen (Vervierfachen bei 256\ldots{})
 \end{frame}
 
 \section{Digital In}
-\label{sec:orgdf1ee2f}
-\begin{frame}[label={sec:org9b6e7ef}]{Startpunkt digitaler Input}
+\label{sec:org6a71adf}
+\begin{frame}[label={sec:org2e58cec}]{Startpunkt digitaler Input}
 Button Beispiel: File \(\rightarrow\) Examples \(\rightarrow\) Digital
 \(\rightarrow\) Button
 
@@ -271,7 +304,7 @@ Geht nicht nur mit einfachen Schaltern und Tastern, sondern auch
 z.B. einer Lichtschranke oder Reed-Schaltern.
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org88c87b9}]{digitalRead}
+\begin{frame}[fragile,label={sec:org60edc24}]{digitalRead}
  \texttt{digitalRead(pin)}: 
 \begin{itemize}
 \item \texttt{HIGH} falls Spannung an \texttt{pin} etwa 2.6 V oder höher
@@ -280,13 +313,13 @@ z.B. einer Lichtschranke oder Reed-Schaltern.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgd099c4e}]{Schaltplanvarianten}
+\begin{frame}[label={sec:org17edcc8}]{Schaltplanvarianten}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./img/pullup.jpg}
 \end{center}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org2585c8e}]{Unterbrechbare Abläufe starten (1)}
+\begin{frame}[fragile,label={sec:orgde53344}]{Unterbrechbare Abläufe starten (1)}
  \begin{minted}[]{c}
 unsigned long button_time = 0;
 bool running = false;
@@ -302,7 +335,7 @@ void loop() {
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org295e77e}]{Unterbrechbare Abläufe starten (2)}
+\begin{frame}[fragile,label={sec:org34b38c4}]{Unterbrechbare Abläufe starten (2)}
  \begin{minted}[]{c}
 bool do_stuff(unsigned long time_point)
   if(time_point < 100) {
@@ -319,13 +352,13 @@ bool do_stuff(unsigned long time_point)
 \end{minted}
 \end{frame}
 
-\begin{frame}[label={sec:org005125d}]{Prellen}
+\begin{frame}[label={sec:orgffd592d}]{Prellen}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./img/bounce.png}
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:org4dc2daf}]{Entprellen}
+\begin{frame}[label={sec:org65fe1ea}]{Entprellen}
 Auch: Debouncing
 
 \begin{itemize}
@@ -338,21 +371,187 @@ suchen muss :)
 \end{frame}
 
 \section{Analog In}
-\label{sec:org10e6fbc}
-\begin{frame}[label={sec:orgf5b0d44}]{Startpunkt analoger Input}
+\label{sec:org175a6d1}
+\begin{frame}[label={sec:org4d715e1}]{Startpunkt analoger Input}
 AnalogInput Beispiel: File \(\rightarrow\) Examples \(\rightarrow\) Analog
 \(\rightarrow\) AnalogInput
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org8a58234}]{analogRead}
+\begin{frame}[fragile,label={sec:org47b3170}]{analogRead}
  \texttt{analogRead(pin)}: 0-1023 für 0-5 Volt an Pin \texttt{pin}.
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org4750e9b}]{Kombination mit analogWrite}
+\begin{frame}[fragile,label={sec:orgbda9128}]{Kombination mit analogWrite}
  \begin{minted}[]{c}
 void loop() {
   int value = analogRead(A0) / 4;
   analogWrite(3, value);
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:org1ed9f6a}]{An den PC senden}
+ \begin{minted}[]{c}
+void setup() {
+  Serial.begin(115200);
+}
+void loop() {
+  Serial.print("Aktueller Wert: ");
+  Serial.println(analogRead(A0));
+}
+\end{minted}
+
+Auch zur Fehlersuche nützlich!
+
+Die Arduino IDE hat einen Plotter, mit dem man den zeitlichen Verlauf
+von Zahlen beobachten kann.
+\end{frame}
+
+\begin{frame}[label={sec:org1649eac}]{Spannungsbereich}
+Maximale Spannung: Versorgungsspannung
+\pause
+
+Darüber: Spannungsteiler
+\end{frame}
+
+\section{Stephan}
+\label{sec:org90d8fde}
+\begin{frame}[label={sec:org7274eb4}]{Stephan}
+Valentin darf sich ausruhen. Ihr nicht.
+\end{frame}
+
+\section{Mehrere LEDs}
+\label{sec:orgfdc0934}
+\begin{frame}[label={sec:org83985ba}]{Diskret}
+Vorteile:
+\begin{itemize}
+\item Einfach
+\item PWM (bei bis zu 6) möglich
+\end{itemize}
+
+Nachteile:
+\begin{itemize}
+\item 1 Pin pro LED
+\item Ab 7 LEDs kein PWM mehr (oder nur in Gruppen)
+\item 1 RGB LED braucht 3 Pins
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:orgd355415}]{Matrix}
+Vorteile:
+\begin{itemize}
+\item Kann je nach Methode mit \(n\) Pins bis zu \(n^2-n\) LEDs ansteuern
+\end{itemize}
+
+Nachteile:
+\begin{itemize}
+\item Kompliziert
+\item Niedrige Wiederholrate
+\item Reduzierte Helligkeit
+\item Bei grö\ss{}eren Spitzenströmen werden externe Treiber benötigt
+\item Kein (hardware-beschleunigtes) Dimmen
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:orgd25306c}]{Schieberegister}
+\begin{itemize}
+\item Englisch: Shift register
+\item Mehrere Ausgänge, z.B. 8
+\item Digitale Steuerung, z.B. SPI oder I2C
+\item Zu viele Werte \(\rightarrow\) alte Werte werden weitergeschoben
+\end{itemize}
+
+Vorteile:
+\begin{itemize}
+\item Einfach
+\item Benötigt wenige (i.d.R. < 4) Pins
+\item Leicht erweiterbar
+\end{itemize}
+
+Nachteile:
+\begin{itemize}
+\item Kein (hardware-beschleunigtes) Dimmen
+\item Wiederholrate sinkt mit 1/n
+\end{itemize}
+\end{frame}
+
+\section{LED Streifen}
+\label{sec:orgd8389f9}
+\begin{frame}[label={sec:org70f30a4}]{WS2812, APA102\ldots{}}
+\begin{itemize}
+\item Mehrere LEDs auf Streifen
+\item Ähnlich zu Schieberegistern
+\item Eingebaute Logik zum Dimmen
+\item Ansteuerung durch fertige Libraries
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:orgd9b4a3e}]{Libraries}
+\begin{itemize}
+\item Sketch \(\rightarrow\) Include Library \(\rightarrow\) Manage Libraries
+\item Modularer Code, bei Arduino häufig zum Ansteuern von externer Hardware
+\item Für WS2812: Adafruit NeoPixel
+\item Für APA102: APA102
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgb7befc6}]{Beispielcode}
+ \begin{minted}[]{c}
+#include <Adafruit_NeoPixel.h>
+Adafruit_NeoPixel strip(144, 13, NEO_GRB + NEO_KHZ800);
+int i = 0;
+void setup() {
+  strip.begin();
+}
+void loop() {
+  strip.setPixelColor(i, 255, 0, 0);
+  strip.show();
+  delay(10);
+  strip.setPixelColor(i, 0, 0, 0);
+  i++;
+  if(i == 144) i = 0;
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:org7bba636}]{Arrays}
+ \ldots{} speichern viele Werte gleichen Typs unter einem Namen. Das erste
+Element hat Index 0.
+
+Beispiel:
+\begin{minted}[]{c}
+int many_values[20];
+for(int i = 0; i < 20; i++)
+  many_values[i] = i;
+Serial.print(many_values[0]+many_values[19]);
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:org8318b75}]{Laufender Regenbogen (1)}
+ \setbeamerfont{smaller}{size=\scriptsize}
+\usebeamerfont{smaller}
+\begin{minted}[]{c}
+#include <Adafruit_NeoPixel.h>
+Adafruit_NeoPixel strip(144, 13, NEO_GRB + NEO_KHZ800);
+uint32_t colors[144];
+int i = 0;
+void setup() {
+  strip.begin();
+  for(i = 0; i < 48; i++) {
+    unsigned char v = i*255/48;
+    colors[i]    = strip.Color(255-v, v, 0);
+    colors[i+48] = strip.Color(0, 255-v, v);
+    colors[i+96] = strip.Color(v, 0, 255-v);
+  }
+}
+void loop() {
+  for(int j = i; j < 144-i; j++)
+    strip.setPixelColor(i+j,     colors[j]);
+  for(int j = 144-i; j < 144; j++)
+    strip.setPixelColor(i+j-144, colors[j]);
+  strip.show();
+  i++;
+  if(i == 144) i = 0;
 }
 \end{minted}
 \end{frame}
