@@ -23,7 +23,7 @@ int analog_start_value;
 bool analog_locked = false;
 
 // Stores the current colour
-unsigned char rgb[3];
+unsigned char rgb_r, rgb_g, rgb_b;
 
 
 void setup() {
@@ -34,7 +34,7 @@ void setup() {
     pinMode(pin_button, INPUT);
 
     // Set colour to black
-    rgb[0] = rgb[1] = rgb[2] = 0;
+    rgb_r = rgb_g = rgb_b = 0;
 }
 
 
@@ -53,12 +53,12 @@ void loop() {
 
         // Get the start value, and prevent color changes for the moment
         // (otherwise we would change the selected color immediately)
-        analog_start_value = analogRead(poti);
+        analog_start_value = analogRead(pin_poti);
         analog_locked = true;
     }
 
     // Get the current potentiometer value
-    int v = analogRead(poti);
+    int v = analogRead(pin_poti);
 
     // Only allow color changes, if the knob has been turned a little.
     if(analog_locked && abs(v - analog_start_value) > 20) {
@@ -71,11 +71,13 @@ void loop() {
         //
         // analogRead values are 0-1023, so divide by four to get
         // 0-255
-        rgb[modifying] = v / 4;
+        if(selected_color == 0)      rgb_r = v / 4;
+        else if(selected_color == 1) rgb_g = v / 4;
+        else                         rgb_b = v / 4;
 
         // Write new values to LED
-        analogWrite(led_r, rgb[0]);
-        analogWrite(led_g, rgb[1]);
-        analogWrite(led_b, rgb[2]);
+        analogWrite(pin_led_r, rgb_r);
+        analogWrite(pin_led_g, rgb_g);
+        analogWrite(pin_led_b, rgb_b);
     }
 }
