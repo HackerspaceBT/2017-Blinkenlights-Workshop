@@ -6,23 +6,10 @@ $\rightarrow$ AnalogInput
 ~analogRead(pin)~: 0-1023 für 0-5 Volt an Pin ~pin~.
 
 * Kombination mit analogWrite
-#+BEGIN_SRC C
-void loop() {
-  int value = analogRead(A0) / 4;
-  analogWrite(3, value);
-}
-#+END_SRC
+#+INCLUDE: "code/analog_write_copy.c" src C
 
 * An den PC senden
-#+BEGIN_SRC C
-void setup() {
-  Serial.begin(115200);
-}
-void loop() {
-  Serial.print("Aktueller Wert: ");
-  Serial.println(analogRead(A0));
-}
-#+END_SRC
+#+INCLUDE: "code/analog_write_send.c" src C
 
 Auch zur Fehlersuche nützlich!
 

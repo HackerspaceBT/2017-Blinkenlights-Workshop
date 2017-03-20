@@ -27,9 +27,8 @@
 * Analog In
 #+INCLUDE: "09-analogin.org"
 
-* Stephan
-** Stephan
-Valentin darf sich ausruhen. Ihr nicht.
+* Bunte Dinge
+** Macht Stephan
 
 * Mehrere LEDs
 #+INCLUDE: "12-multiled.org"
@@ -40,7 +39,25 @@ Valentin darf sich ausruhen. Ihr nicht.
 * Stromversorgung
 ** Macht Stephan
 
-*Däumchen dreh*
-
 * Sensoren
 #+INCLUDE: "15-sensors.org"
+* Basteln
+** Basteln                                                          :B_frame:
+   :PROPERTIES:
+   :BEAMER_env: frame
+   :END:
+
+Vorschläge?
+
+Mehr als ausreichend vorhanden:
+- NTC Widerstände
+- Analoge Hall-Sensoren
+
+Nicht ganz so viel auf Vorrat:
+- IR Empfänger
+- Gyroskop, Beschleunigungssensor, Luftdruck
+- Ultraschall Sensor
+- PIR Sensor
+- Kurze LED-Streifen
+- Anderes
+

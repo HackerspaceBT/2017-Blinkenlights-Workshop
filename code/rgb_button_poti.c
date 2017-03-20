@@ -38,7 +38,7 @@ void setup() {
 void loop() {
 
     // Only read the button after 100 ms - simple debouncing
-    if(millis() - button_time > 100  &&  digitalRead(button) == HIGH) {
+    if(millis() - button_time > 100  &&  digitalRead(pin_button) == HIGH) {
 
         // Select the next colour channel
         selected_color += 1;
@@ -50,12 +50,12 @@ void loop() {
 
         // Get the start value, and prevent color changes for the moment
         // (otherwise we would change the selected color immediately)
-        analog_start_value = analogRead(poti);
+        analog_start_value = analogRead(pin_poti);
         analog_locked = true;
     }
 
     // Get the current potentiometer value
-    int v = analogRead(poti);
+    int v = analogRead(pin_poti);
 
     // Only allow color changes, if the knob has been turned a little.
     if(analog_locked && abs(v - analog_start_value) > 20) {
@@ -66,11 +66,13 @@ void loop() {
     if(!analog_locked ) {
         // Change the current colour channel
         // analogRead values are 0-1023, so divide by four to get 0-255
-        rgb[modifying] = v / 4;
+        if(selected_color == 0)      r = v / 4;
+        else if(selected_color == 1) g = v / 4;
+        else                         b = v / 4;
 
         // Write new values to LED
-        analogWrite(led_r, r);
-        analogWrite(led_g, g);
-        analogWrite(led_b, b);
+        analogWrite(pin_led_r, r);
+        analogWrite(pin_led_g, g);
+        analogWrite(pin_led_b, b);
     }
 }
