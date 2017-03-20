@@ -23,7 +23,7 @@ int analog_start_value;
 bool analog_locked = false;
 
 // Stores the current colour
-unsigned char rgb[3];
+unsigned char r = 0, g = 0, b = 0;
 
 
 void setup() {
@@ -32,9 +32,6 @@ void setup() {
     pinMode(pin_led_g, OUTPUT);
     pinMode(pin_led_b, OUTPUT);
     pinMode(pin_button, INPUT);
-
-    // Set colour to black
-    rgb[0] = rgb[1] = rgb[2] = 0;
 }
 
 
@@ -68,14 +65,12 @@ void loop() {
     // If color changes are allowed
     if(!analog_locked ) {
         // Change the current colour channel
-        //
-        // analogRead values are 0-1023, so divide by four to get
-        // 0-255
+        // analogRead values are 0-1023, so divide by four to get 0-255
         rgb[modifying] = v / 4;
 
         // Write new values to LED
-        analogWrite(led_r, rgb[0]);
-        analogWrite(led_g, rgb[1]);
-        analogWrite(led_b, rgb[2]);
+        analogWrite(led_r, r);
+        analogWrite(led_g, g);
+        analogWrite(led_b, b);
     }
 }
