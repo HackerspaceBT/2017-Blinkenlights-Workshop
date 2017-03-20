@@ -2,12 +2,13 @@
 const int pin_led_r = 3;
 const int pin_led_g = 5;
 const int pin_led_b = 6;
+const int pin_gnd = 4;
 
 // Pin to which our button is connected, with a pull-down
-const int pin_button = 7;
+const int pin_button = A0;
 
 // Potentiometer pin
-const int pin_poti = A0;
+const int pin_poti = A1;
 
 // When was the last time the button got pressed?
 unsigned long button_time = 0;
@@ -31,14 +32,15 @@ void setup() {
     pinMode(pin_led_r, OUTPUT);
     pinMode(pin_led_g, OUTPUT);
     pinMode(pin_led_b, OUTPUT);
-    pinMode(pin_button, INPUT);
+    pinMode(pin_gnd, OUTPUT);
+    pinMode(pin_button, INPUT_PULLUP);
 }
 
 
 void loop() {
 
     // Only read the button after 100 ms - simple debouncing
-    if(millis() - button_time > 100  &&  digitalRead(pin_button) == HIGH) {
+    if(millis() - button_time > 100  &&  digitalRead(pin_button) == LOW) {
 
         // Select the next colour channel
         selected_color += 1;
@@ -76,3 +78,4 @@ void loop() {
         analogWrite(pin_led_b, b);
     }
 }
+
