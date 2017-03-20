@@ -41,7 +41,7 @@ void setup() {
 void loop() {
 
     // Only read the button after 100 ms - simple debouncing
-    if(millis() - button_time > 100  &&  digitalRead(button) == HIGH) {
+    if(millis() - button_time > 100  &&  digitalRead(pin_button) == HIGH) {
 
         // Select the next colour channel
         selected_color += 1;
